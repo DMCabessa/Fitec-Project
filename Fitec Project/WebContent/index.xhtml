@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+  <f:view contentType="text/html" id="fview">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <title>Fitec Project</title>
+	    <ui:debug />
+	    <f:metadata>
+	        <ui:insert name="metadata" />
+	    </f:metadata>
+    </h:head>
+
+    <h:body onload="statusDialog.hide();">
+	    <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+	        <p:layoutUnit position="west" id="west" resizable="false" style="height:580px;overflow:hidden;" size="250">
+	        	<h:form>  
+	        		<p:growl id="messages" showDetail="false"/>
+	        	
+		            <h3 style="margin-top:0">Menu</h3>
+				    <p:menu style="width:98%">
+				    	<p:submenu label="General">
+				    		<p:menuitem value="Home" update="messages" icon="ui-icon-home" styleClass="#{view.viewId == '/index.xhtml' ? 'ui-state-active' : ''}"/>
+				    	</p:submenu>
+				    	<p:submenu label="Task options">
+					    	<p:menuitem value="Create new task" outcome="/task/new.xhtml" update="messages" icon="ui-icon-plus" />
+					        <p:menuitem value="View upcomming tasks" outcome="/task/unfinished.xhtml" update="messages" icon="ui-icon-notice"/>
+					        <p:menuitem value="View finished tasks" outcome="/task/finished.xhtml" update="messages" icon="ui-icon-check"/>
+					        <p:menuitem value="View all tasks" outcome="/task/list.xhtml" update="messages" icon="ui-icon-script"/>
+				        </p:submenu>
+				    </p:menu>
+			    </h:form>
+	        </p:layoutUnit>
+	
+	        <p:layoutUnit styleClass="layoutUnitCenter" position="center" style="margin-left:1px">
+	            <h:form id="mainForm">
+	                <h2 style="margin-top:0">Personal Assistant</h2>
+	                <h:outputText id="description" value="#{viewBean.description}" />
+	                <br/><br/>
+	                <h:outputText id="help" value="#{viewBean.help}" />
+	            </h:form>
+	        </p:layoutUnit>
+	
+	    </p:layout>
+	
+	    <p:dialog modal="true" widgetVar="statusDialog" showHeader="false" draggable="false" closable="false" resizable="false" visible="false" position="center" maximizable="false" minimizable="false" >
+	        
+	    </p:dialog>
+    </h:body>
+
+  </f:view>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+  <f:view contentType="text/html" id="fview">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <title>Fitec project</title>
+	    <ui:debug />
+	    <f:metadata>
+	        <ui:insert name="metadata" />
+	    </f:metadata>
+    </h:head>
+
+    <h:body onload="statusDialog.hide();">
+	    <p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFFFFF;">
+	        <p:layoutUnit position="west" id="west" resizable="false" style="height:580px;overflow:hidden;" size="250">
+	        	<h:form>  
+	        		<p:growl id="messages" showDetail="false"/>
+	        	
+		            <h3 style="margin-top:0">Menu</h3>
+				    <p:menu style="width:98%">
+				    	<p:submenu label="General">
+				    		<p:menuitem value="Home" outcome="/index.xhtml" update="messages" icon="ui-icon-home"/>
+				    	</p:submenu>
+				    	<p:submenu label="Task options">
+					    	<p:menuitem value="Create new task" outcome="/task/new.xhtml" update="messages" icon="ui-icon-plus"/>
+					        <p:menuitem value="View pending tasks" outcome="/task/unfinished.xhtml" update="messages" icon="ui-icon-notice"/>
+					        <p:menuitem value="View completed tasks" outcome="/task/finished.xhtml" update="messages" icon="ui-icon-check"/>
+					        <p:menuitem value="View all tasks" update="messages" icon="ui-icon-script" styleClass="#{view.viewId == '/task/list.xhtml' ? 'ui-state-active' : ''}"/>
+					    </p:submenu>
+				    </p:menu>
+			    </h:form>
+	        </p:layoutUnit>
+	
+	        <p:layoutUnit styleClass="layoutUnitCenter" position="center" style="margin-left:1px">
+	            <h2 style="margin-top:0">View all tasks</h2>
+	            <h:form id="form">
+	                <p:messages id="messages" showDetail="true"/>
+	                <p:dataTable var="task" value="#{allTaskBean.list}">
+	                	<p:growl id="messages" showDetail="true"/>
+	                
+					    <p:column headerText="Name" sortBy="#{task.name}">
+					        <h:outputText value="#{task.name}" />
+					    </p:column>
+					 
+					    <p:column headerText="Description" sortBy="#{task.description}">
+					        <h:outputText value="#{task.description}"  escape="false" style="white-space: pre-wrap;word-wrap: break-word;"/>
+					    </p:column>
+					 
+					    <p:column headerText="Due date" sortBy="#{task.due}">
+					        <h:outputText value="#{task.due}" style="display:block; text-align:center"/>
+					    </p:column>
+					 
+					    <p:column headerText="Status" sortBy="#{task.finished}">
+					        <p:selectBooleanCheckbox value="#{task.finished}" disabled="true" style="display:block; text-align:center"/>
+					    </p:column>
+					    
+					    <p:column headerText="Actions" style="display:block; text-align:center">
+					        <p:commandButton actionListener="#{allTaskBean.delete(task)}" id="Delete" icon="ui-icon-trash" title="Delete" update="form"/>
+					    </p:column>
+					</p:dataTable>
+	            </h:form>
+	        </p:layoutUnit>
+	
+	    </p:layout>
+	
+	    <p:dialog modal="true" widgetVar="statusDialog" showHeader="false" draggable="false" closable="false" resizable="false" visible="false" position="center" maximizable="false" minimizable="false" >
+	        
+	    </p:dialog>
+    </h:body>
+
+  </f:view>
+</html>
